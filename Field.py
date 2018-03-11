@@ -117,6 +117,11 @@ class Field:
             if tuple in ship:
                 return True
         return False
+        # if "*"not in data[tuple[0]]:
+        #     return False
+        # else:
+        #     if data[tuple[0]][int(tuple[1]) - 1] == '*':
+        #         return True
 
     def make_field(self):
         abc = "abcdefghij"
