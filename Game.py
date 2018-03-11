@@ -8,7 +8,6 @@ class Game:
         self.__players = []
         self.__current_player = 0
 
-    def __init__(self):
         player_1 = P.Player("Anton")
         field_1 = F.Field()
         player_2 = P.Player("Max")
@@ -23,12 +22,6 @@ class Game:
 
     def read_position(self):
         return self.__players[self.__current_player].read_position()
-
-    def field_without_ships(self, index):
-        pass
-
-    def field_with_ships(self):
-        pass
 
     def have_winner(self):
         end = True
@@ -51,11 +44,4 @@ class Game:
             i += 1
 
 game1 = Game()
-# """
-# Cстворюєму обєкт гри
-# """
 game1.start()
-# """
-# Запускаємо гру
-# """
-
