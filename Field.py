@@ -4,8 +4,8 @@ import Ship as S
 class Field:
 
     def __init__(self):
-        self.__data = self.make_field()
-        self.__ships = self.generate_field()
+        # self.__data = self.make_field()
+        self.__ships = ()
         self.field_without = self.make_field()
         self.field_with = self.make_field()
 
@@ -37,10 +37,11 @@ class Field:
             while True:
                 ship = boat.generate_ship([1, 12 - len], len)
                 build = True
-
                 area = self.no_ship(ship, len)
                 for row in area:
                     for el in row:
+                        print("el",el)
+                        print("row",row)
                         if self.has_ship(el):
                             build = False
                 if build:
@@ -48,64 +49,67 @@ class Field:
                     c += 1
                 if c == count:
                     break
+                print("boat is",boats)
         return boats
 
     def no_ship(self, coordinate, len):
         abc = "abcdefghij"
         area = []
 
-        if coordinate[0][1] == coordinate[-1][1]:
-            area = self.x_area(abc, coordinate)
-        else:
-            if coordinate[0][0] in abc[1:-len]:
-                if coordinate[0][1] > 1 and coordinate[-1][1] < 10:
-                    start = abc.index(coordinate[0][0]) - 1
-                    end = abc.index(coordinate[-1][0]) + 2
-                    number = coordinate[0][1] - 1
+        # if str(coordinate)[0][1] == coordinate[-1][1]:
+        #     area = self.x_area(abc, coordinate)
+        # else:
+        print(coordinate)
+        print(coordinate[0][0])
+        if coordinate[0][0][0] in abc[1:-len]:
+            if coordinate[0][0][1] > 1 and coordinate[-1] < 10:
+                start = abc.index(coordinate[0][0][0]) - 1
+                end = abc.index(coordinate[0][-1][0]) + 2
+                number = coordinate[0][0][1] - 1
 
-                    for i in range(3):
-                        l = [(letter, number) for letter in abc[start: end]]
-                        number += 1
-                        area.append(l)
-                else:
-                    start = abc.index(coordinate[0][0]) - 1
-                    end = abc.index(coordinate[-1][0]) + 1
-                    number = coordinate[0][1]
-
-                    for i in range(2):
-                        l = [(letter, number) for letter in abc[start: end]]
-                        if coordinate[0][1] == 1:
-                            number += 1
-                        else:
-                            number -= 1
-                        area.append(l)
+                for i in range(3):
+                    l = [(letter, number) for letter in abc[start: end]]
+                    number += 1
+                    area.append(l)
             else:
-                if coordinate[0][1] > 1 and coordinate[-1][1] < 10:
-                    start = abc.index(coordinate[0][0]) - 1
-                    end = abc.index(coordinate[-1][0])
-                    number = coordinate[0][1] - 1
+                start = abc.index(coordinate[0][0][0]) - 1
+                end = abc.index(coordinate[0][-1][0]) + 1
+                number = coordinate[0][0][1]
 
-                    for i in range(3):
-                        l = [(letter, number) for letter in abc[start: end]]
+                for i in range(2):
+                    l = [(letter, number) for letter in abc[start: end]]
+                    if coordinate[0][0][1] == 1:
                         number += 1
-                        area.append(l)
-                else:
-                    number = coordinate[0][1]
-                    if coordinate[0][1] == 1:
-                        start = abc.index(coordinate[0][0])
-                        end = abc.index(coordinate[-1][0]) + 2
                     else:
-                        start = abc.index(coordinate[0][0])
-                        end = abc.index(coordinate[-1][0]) + 2
-                        number = coordinate[0][1]
+                        number -= 1
+                    area.append(l)
+        else:
+            if coordinate[0][0][1] > 1 and coordinate[0][-1][1] < 10:
+                start = abc.index(coordinate[0][0][0]) - 1
+                end = abc.index(coordinate[0][-1][0])
+                number = coordinate[0][0][1] - 1
 
-                    for i in range(2):
-                        l = [(letter, number) for letter in abc[start:end]]
-                        if coordinate[0][1] == 1:
-                            number += 1
-                        else:
-                            number -= 1
-                        area.append(l)
+                for i in range(3):
+                    l = [(letter, number) for letter in abc[start: end]]
+                    number += 1
+                    area.append(l)
+            else:
+                number = coordinate[0][0][1]
+                if coordinate[0][0][1] == 1:
+                    start = abc.index(coordinate[0][0][0])
+                    end = abc.index(coordinate[0][-1][0]) + 2
+                else:
+                    start = abc.index(coordinate[0][0][0])
+                    end = abc.index(coordinate[0][-1][0]) + 2
+                    number = coordinate[0][0][1]
+
+                for i in range(2):
+                    l = [(letter, number) for letter in abc[start:end]]
+                    if coordinate[0][0][1] == 1:
+                        number += 1
+                    else:
+                        number -= 1
+                    area.append(l)
         return area
 
     def has_ship(self, tuple):
@@ -113,11 +117,6 @@ class Field:
             if tuple in ship:
                 return True
         return False
-        # if "*"not in data[tuple[0]]:
-        #     return False
-        # else:
-        #     if data[tuple[0]][int(tuple[1]) - 1] == '*':
-        #         return True
 
     def make_field(self):
         abc = "abcdefghij"
@@ -145,5 +144,3 @@ class Field:
 
     def get_ships(self):
         return self.__ships
-
-
