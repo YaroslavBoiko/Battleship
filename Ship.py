@@ -42,4 +42,3 @@ class Ship:
             return True
         else:
             return False
-
