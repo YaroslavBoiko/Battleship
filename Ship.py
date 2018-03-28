@@ -39,16 +39,12 @@ class Ship:
             head_x = int(rd.uniform(LIMITS.get('left'), LIMITS.get('right') - x_length))
             head_y = int(rd.uniform(LIMITS.get('left'), LIMITS.get('right') - y_length))
 
-        try:
         
-            if x_length > 1:
-                return self.horizontal_ship(head_x, head_y, x_length)
-            else:
-                return self.vertical_ship(head_x, head_y, y_length)
-        except IndexError as e:
-            print(e)
-            import pdb
-            pdb.set_trace()
+        if x_length > 1:
+            return self.horizontal_ship(head_x, head_y, x_length)
+        else:
+            return self.vertical_ship(head_x, head_y, y_length)
+            
 
     def horizontal_ship(self, head_x, head_y, length):
         return ([(ABC[head_x + i], head_y) for i in range(length)], True)
