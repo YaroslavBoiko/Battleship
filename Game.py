@@ -1,47 +1,69 @@
-import Field as F
-import Player as P
+from Field import Field
+from Player import Player
 
 
 class Game:
     def __init__(self):
-        self.__fields = []
-        self.__players = []
-        self.__current_player = 0
-
-        player_1 = P.Player("Anton")
-        field_1 = F.Field()
-        player_2 = P.Player("Max")
-        field_2 = F.Field()
-
-        self.__players.append(player_1)
-        self.__players.append(player_2)
-        self.__fields.append(field_1)
-        self.__fields.append(field_2)
+        self.__players = [Player("Anton"), Player("Max")]
+        self.__fields = [Field(), Field()]
 
         self.__current_player = 0
+        self.__current_field = 1
+
+    def get_filed(self, index):
+        return self.__fields[index]
 
     def read_position(self):
         return self.__players[self.__current_player].read_position()
 
+    def field_without_ships(self, index):
+        return self.__fields[index].get_field_without_ship()
+
+    def field_with_ships(self, index):
+        field = self.__fields[index].get_field_with_ship()
+        for row in field:
+            yield row
+
     def have_winner(self):
-        end = True
+        is_winner = False
         for fields in self.__fields:
+            ships_count = 0
             for ship in fields.get_ships():
-                if False in ship.get_hit():
-                    end = False
-        return end
+                if all(ship.get_hit()):
+                    ships_count += 1
+            if ships_count == 10:
+                is_winner = True
+        return is_winner
+
+    def change_player(self):
+        if self.__current_player == 0:
+            self.__current_player = 1
+            self.__current_field = 0
+        else:
+            self.__current_player = 0
+            self.__current_field = 1
 
     def start(self):
-        i = 1
+        print("First field")
+        for row in self.field_with_ships(0):
+            print(row)
+        print("Second field")
+        for row in self.field_with_ships(1):
+            print(row)
+
         while not self.have_winner():
             turn = self.read_position()
-            while self.__fields[self.__current_player].has_ship(turn):
-                # Перевіряєє чи людина попала
-                self.__fields[self.__current_player].shoot_at(turn)
-                print("Влучив")
-                print(self.__fields[self.__current_player].shoot_at(turn).field_without_ship)
-            self.__current_player = i % 2
-            i += 1
+            shoot = self.__fields[self.__current_field].shoot_at(turn)
+            while shoot:
+                print("Hit")
+                turn = self.read_position()
+                shoot = self.__fields[self.__current_field].shoot_at(turn)
+            print("Sorry, you didn't hit!")
+            self.change_player()
 
-game1 = Game()
-game1.start()
+
+if '__main__':
+
+    game1 = Game()
+    game1.start()
+
