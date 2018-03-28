@@ -32,11 +32,7 @@ class Field:
         self.generate_field()
         self.field_without_ships = self.make_field()
         self.field_with_ships = self.make_field()
-
-    def get_ships_coordinate(self):
-        for ship in self.__ships:
-            print(ship.coordinate)
-
+        
     def get_field_without_ship(self):
         self.field_without_ships = self.make_field()
 
